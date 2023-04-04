@@ -168,6 +168,31 @@ for (let i = 0; i < 50; i++) {
 
 }
 
+// // Create Hand of the Dead
+// const handsOfTheDead = new THREE.Group()
+// scene.add(handsOfTheDead)
+
+// // hand of the dead
+// const handOfTheDeadGeometry = new THREE.BoxGeometry(.2, .5, .2)
+// const handOfTheDeadMaterial = new THREE.MeshStandardMaterial({ color: '#b2b6b1' })
+
+// // creating the hand of the dead. we want a loop to create 5 hand of the dead
+// for (let i = 0; i < 5; i++) {
+//   // creating the mesh
+//   const angle = Math.random() * Math.PI * 2 // random angle full circle
+//   const radius = 4 + Math.random() * 4 // random radius between 3 and 6 to make sure they are not too close to the house
+//   const x = Math.sin(angle) * radius // x position of the hand of the dead
+//   const z = Math.cos(angle) * radius // z position of the hand of the dead for the y position we want them to be on the ground so we set it to 0
+
+//   const handOfTheDead = new THREE.Mesh(handOfTheDeadGeometry, handOfTheDeadMaterial)
+//   handOfTheDead.position.set(x, 0.3, z)
+//   handOfTheDead.rotation.y = (Math.random() - 0.5 ) * 0.4 // random rotation
+//   handOfTheDead.rotation.z = (Math.random() - 0.3) * 0.4 // random rotation
+//   handOfTheDead.castShadow = true // cast shadow
+
+//   handsOfTheDead.add(handOfTheDead) // add the hand of the dead to the hand of the dead group
+// }
+
 
 // Floor
 const floor = new THREE.Mesh(
@@ -197,7 +222,7 @@ gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.12)
+const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.32)
 moonLight.position.set(4, 5, - 2)
 gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
@@ -337,6 +362,11 @@ const tick = () =>
     ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5))
     ghost3.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5)
 
+    // Update Moon Light
+    moonLight.position.x = Math.sin(elapsedTime * 0.2) * 30 // 30 is the radius of the circle
+    moonLight.position.z = Math.cos(elapsedTime * 0.2) * 30
+    moonLight.position.y = Math.sin(elapsedTime * 0.2) * 10
+    // moonLight.intensity = (Math.sin(elapsedTime * 0.32) + 1) * 0.5
 
     // Update controls
     controls.update()
